@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Crear Aviso</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="postForm" (ngSubmit)="onSubmit()">
+    <ion-item>
+      <ion-input label="Título" labelPlacement="floating" formControlName="title"></ion-input>
+    </ion-item>
+    <div class="error-msg" *ngIf="postForm.get('title')?.invalid && postForm.get('title')?.touched" style="color: red; padding: 5px;">
+      <small *ngIf="postForm.get('title')?.hasError('required')">Título obligatorio.</small>
+      <small *ngIf="postForm.get('title')?.hasError('minlength')">Mínimo 5 caracteres.</small>
+    </div>
+
+    <ion-item>
+      <ion-textarea label="Descripción" labelPlacement="floating" formControlName="description" rows="5"></ion-textarea>
+    </ion-item>
+    <div class="error-msg" *ngIf="postForm.get('description')?.invalid && postForm.get('description')?.touched" style="color: red; padding: 5px;">
+      <small *ngIf="postForm.get('description')?.hasError('required')">Descripción obligatoria.</small>
+      <small *ngIf="postForm.get('description')?.hasError('minlength')">Mínimo 20 caracteres.</small>
+    </div>
+
+    <ion-button expand="block" fill="outline" class="ion-margin-top" (click)="takePicture()">
+      <ion-icon slot="start" name="camera"></ion-icon>
+      Adjuntar Foto
+    </ion-button>
+
+    <div *ngIf="capturedImage" class="ion-margin-top ion-text-center">
+      <img [src]="capturedImage" style="height: 150px; border-radius: 10px;" />
+    </div>
+
+    <ion-button expand="block" type="submit" class="ion-margin-top" [disabled]="!postForm.valid">
+      PUBLICAR
+    </ion-button>
+  </form>
+</ion-content>
